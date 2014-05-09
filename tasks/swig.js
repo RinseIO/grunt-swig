@@ -31,7 +31,8 @@ module.exports = function(grunt) {
     if (config.data.tags !== undefined) {
       for (var tag in config.data.tags) {
         var module = path.resolve(process.cwd() + '/' + config.data.tags[tag]);
-        swig.setTag(tag, require(module)[tag]);
+        var customTag = require(module);
+        swig.setTag(tag, customTag.parse, customTag.compile, customTag.ends, customTag.blockLevel);
       }
     }
 
