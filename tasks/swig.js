@@ -28,6 +28,13 @@ module.exports = function(grunt) {
       }
     }
 
+    if (config.data.tags !== undefined) {
+      for (var tag in config.data.tags) {
+        var module = path.resolve(process.cwd() + '/' + config.data.tags[tag]);
+        swig.setTag(tag, require(module)[tag]);
+      }
+    }
+
     try {
       globalVars = grunt.util._.extend(config.data, grunt.file.readJSON(process.cwd() + '/global.json'));
     } catch (err) {
